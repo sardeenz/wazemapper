@@ -10,13 +10,19 @@ class CoREsriAPI
   format :json
 
   def self.getSpecialEventData(precision)
-  	@display = []
-    @eventdata = get('/SpecialEvents/SpecialEventsView/MapServer/0/query?where=1%3D1&outSR=4326&geometryPrecision=6&f=json')
-  		 @eventdata['features'].each do |object|
+  	data4waze = []
+  	query = { "where" => "1=1", "outSR" => "4326", "geometryPrecision" => precision, "f" => "json"}
+    response = get('/SpecialEvents/SpecialEventsView/MapServer/0/query', :query => query) # we could add headers here if needed HTTParty.post("https://www.acb.com/api/v2/market/LTC_BTC/", :query => query, :headers => headers )
+
+    if response.success?
+  		 response['features'].each do |object|
 		   	puts object['attributes']
-		    @display << object['attributes']
+		    data4waze << object['attributes']
 		 end		
-		 return @display
+	   	 return data4waze
+	else
+		raise response.response
+	end
   end
 
 end
