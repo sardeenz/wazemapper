@@ -15,11 +15,12 @@ class CoREsriAPI
     response = get('/SpecialEvents/SpecialEventsView/MapServer/0/query', :query => query) # we could add headers here if needed HTTParty.post("https://www.acb.com/api/v2/market/LTC_BTC/", :query => query, :headers => headers )
 
     if response.success?
-  		 response['features'].each do |object|
-		   	puts object['attributes']
-		    data4waze << object['attributes']
-		 end		
-	   	 return data4waze
+  	# 	 response['features'].each do |object|
+		 #   	puts object['attributes']
+		 #    data4waze << object['attributes']
+		 # end		
+	   	 # return data4waze
+	   	 return response
 	else
 		raise response.response
 	end
